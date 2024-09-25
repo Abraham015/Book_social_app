@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-    private JwtFilter jwtAuthFilter;
+    private final JwtFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private static final List<String> SECURED_URLS=List.of(
             "/auth/**",
