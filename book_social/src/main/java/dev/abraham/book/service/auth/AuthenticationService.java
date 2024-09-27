@@ -41,10 +41,11 @@ public class AuthenticationService implements IAuthenticationService {
     @Value("${application.security.mailing.frontend.activation-url}")
     private String activationUrl;
 
-    @Transactional
-    public void activateAccount(String Token) throws MessagingException {
+    //@Transactional
+    public void activateAccount(String token) throws MessagingException {
+        System.out.println("El token es "+token );
         Token savedToken=tokenRepository
-                .findByToken(Token)
+                .findByToken(token)
                 .orElseThrow(()->new RuntimeException("Token not valid"));
         if(LocalDateTime.now().isAfter(savedToken.getExpiresAt())){
             sendValidationEmail(savedToken.getUser());

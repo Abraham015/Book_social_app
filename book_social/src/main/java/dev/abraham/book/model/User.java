@@ -38,12 +38,17 @@ public class User implements UserDetails, Principal {
     private boolean enabled;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+    @OneToMany(mappedBy = "users")
+    private List<BookTransactionHistory> histories;
     @CreatedDate
     @Column(nullable=false, updatable=false)
     private LocalDateTime createdDate;
     @LastModifiedDate
     @Column(insertable=false)
     private LocalDateTime lastModifiedDate;
+
 
     public String getName() {
         return email;

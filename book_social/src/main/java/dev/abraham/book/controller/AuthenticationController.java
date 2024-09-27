@@ -9,6 +9,7 @@ import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -35,7 +36,7 @@ public class AuthenticationController {
         try {
             APIResponse response=authenticationService.authenticate(request);
             if(response.getData()!=null){
-                return ResponseEntity.ok(new APIResponse( "Login success", null));
+                return ResponseEntity.ok(new APIResponse( "Login success", response.getData()));
             }
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new APIResponse("Login failed", null));
         } catch (Exception e) {
@@ -43,13 +44,13 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/active-account")
+    @GetMapping("/activate-account")
     public ResponseEntity<APIResponse> activeAccount(@RequestParam String token){
         try {
             authenticationService.activateAccount(token);
             return ResponseEntity.ok(new APIResponse( "Activation success", null));
         } catch (MessagingException | RuntimeException e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new APIResponse("Activation failed", null));
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new APIResponse(e.getMessage(), null));
         }
     }
 }
