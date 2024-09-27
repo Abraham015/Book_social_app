@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableJpaAuditing
 @EnableAsync
 public class BookSocialApiApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BookSocialApiApplication.class, args);
 	}

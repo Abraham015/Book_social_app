@@ -1,7 +1,6 @@
 package dev.abraham.book.service.auth;
 
-import dev.abraham.book.model.User;
-import dev.abraham.book.request.RegistrationRequest;
+import dev.abraham.book.request.auth.RegistrationRequest;
 import jakarta.mail.MessagingException;
 
 public interface IAuthenticationService {

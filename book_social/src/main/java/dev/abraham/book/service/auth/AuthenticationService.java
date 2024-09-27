@@ -7,17 +7,26 @@ import dev.abraham.book.model.User;
 import dev.abraham.book.repository.RoleRepository;
 import dev.abraham.book.repository.TokenRepository;
 import dev.abraham.book.repository.UserRepository;
-import dev.abraham.book.request.RegistrationRequest;
+import dev.abraham.book.request.auth.AuthenticationRequest;
+import dev.abraham.book.request.auth.RegistrationRequest;
+import dev.abraham.book.response.APIResponse;
+import dev.abraham.book.security.jwt.JwtService;
 import dev.abraham.book.service.email.EmailService;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +36,43 @@ public class AuthenticationService implements IAuthenticationService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final EmailService emailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
     @Value("${application.security.mailing.frontend.activation-url}")
     private String activationUrl;
+
+    @Transactional
+    public void activateAccount(String Token) throws MessagingException {
+        Token savedToken=tokenRepository
+                .findByToken(Token)
+                .orElseThrow(()->new RuntimeException("Token not valid"));
+        if(LocalDateTime.now().isAfter(savedToken.getExpiresAt())){
+            sendValidationEmail(savedToken.getUser());
+            throw new RuntimeException("Token is expired");
+        }
+
+        User user=userRepository.findById(savedToken.getUser().getId())
+                .orElseThrow(()->new UsernameNotFoundException("User not found"));
+        user.setEnabled(true);
+        userRepository.save(user);
+        savedToken.setValidateAt(LocalDateTime.now());
+        tokenRepository.save(savedToken);
+
+    }
+
+    public APIResponse authenticate(AuthenticationRequest authenticationRequest) {
+        var auth=authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        authenticationRequest.getEmail(),
+                        authenticationRequest.getPassword()
+                )
+        );
+        Map<String, Object> claims=new HashMap<>();
+        User user=((User) auth.getPrincipal());
+        claims.put("fullName",user.getFullName());
+        String jwtToken=jwtService.generateToken(claims, user);
+        return new APIResponse(null, jwtToken);
+    }
 
     public void register(RegistrationRequest request) throws MessagingException {
         Role userRole=roleRepository.findByName("USER")
