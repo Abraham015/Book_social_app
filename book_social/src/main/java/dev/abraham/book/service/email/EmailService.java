@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class EmailService {
+public class EmailService implements IEmailService {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
