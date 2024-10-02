@@ -12,6 +12,7 @@ import dev.abraham.book.response.book.BookResponse;
 import dev.abraham.book.response.book.BorrowedBookResponse;
 import dev.abraham.book.service.file.FileStorageService;
 import dev.abraham.book.specification.BookSpecification;
+import dev.abraham.book.utils.FileUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -223,6 +224,7 @@ public class BookService implements IBookService{
                 .rate(req.getRate())
                 .archived(req.isArchived())
                 .shareable(req.isAvailable())
+                .cover(FileUtils.readFileFromLocation(req.getBookCover()))
                 .build();
 
     }
