@@ -1,6 +1,7 @@
 package dev.abraham.book.service.feedback;
 
 import dev.abraham.book.exception.OperationNotValidException;
+import dev.abraham.book.mapper.FeedbackMapper;
 import dev.abraham.book.model.Book;
 import dev.abraham.book.model.Feedback;
 import dev.abraham.book.model.User;
@@ -22,9 +23,10 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class FeedbackService {
+public class FeedbackService implements IFeedbackService {
     private final BookRepository bookRepository;
     private final FeedbackRepository feedbackRepository;
+    private final FeedbackMapper feedbackMapper;
 
     public Long saveFeedback(FeedbackRequest feedbackRequest, Authentication authentication) {
         Book book=bookRepository.findById(feedbackRequest.bookId())
@@ -37,27 +39,15 @@ public class FeedbackService {
         if(Objects.equals(book.getOwner().getId(),user.getId())){
             throw new OperationNotValidException("You can not give a feedback to your own book");
         }
-        Feedback feedback=toFeedback(feedbackRequest);
+        Feedback feedback=feedbackMapper.toFeedback(feedbackRequest);
         return feedbackRepository.save(feedback).getId();
-    }
-
-    private Feedback toFeedback(FeedbackRequest feedbackRequest) {
-        return Feedback.builder()
-                .score(feedbackRequest.note())
-                .feedback(feedbackRequest.comment())
-                .book(Book.builder()
-                        .id(feedbackRequest.bookId())
-                        .archived(false)
-                        .available(false)
-                        .build())
-                .build();
     }
 
     public PageResponse<FeedbackResponse> findAllFeedbackByBook(Long bookId, int page, int size, Authentication auth) {
         Pageable pageable= PageRequest.of(page, size);
         User user=(User) auth.getPrincipal();
         Page<Feedback> feedbacks=feedbackRepository.findAllByBookId(bookId, pageable);
-        List<FeedbackResponse> responses=feedbacks.stream().map(f->toFeedbackResponse(f, user.getId()))
+        List<FeedbackResponse> responses=feedbacks.stream().map(f->feedbackMapper.toFeedbackResponse(f, user.getId()))
                 .toList();
         return new PageResponse<>(
                 responses,
@@ -70,11 +60,4 @@ public class FeedbackService {
         );
     }
 
-    private FeedbackResponse toFeedbackResponse(Feedback feedback, Long id) {
-        return FeedbackResponse.builder()
-                .note(feedback.getScore())
-                .comment(feedback.getFeedback())
-                .ownFeedback(Objects.equals(feedback.getCreatedBy(), id))
-                .build();
-    }
 }

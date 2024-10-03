@@ -1,6 +1,5 @@
 package dev.abraham.book.service.file;
 
-import dev.abraham.book.model.Book;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +16,10 @@ import java.nio.file.Paths;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class FileStorageService {
+public class FileStorageService implements IFileStorageService {
     @Value("${application.file.upload.photos-output-path}")
     private String fileUploadPath;
+
     public String saveFile(@NonNull MultipartFile file, @NonNull Long userId) {
         final String filePath="user"+ File.separator+userId;
         return uploadFile(file, filePath);

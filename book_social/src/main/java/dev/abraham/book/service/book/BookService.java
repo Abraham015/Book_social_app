@@ -1,6 +1,7 @@
 package dev.abraham.book.service.book;
 
 import dev.abraham.book.exception.OperationNotValidException;
+import dev.abraham.book.mapper.BookMapper;
 import dev.abraham.book.model.Book;
 import dev.abraham.book.model.BookTransactionHistory;
 import dev.abraham.book.model.User;
@@ -32,17 +33,18 @@ public class BookService implements IBookService{
     private final BookRepository bookRepository;
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
     private final FileStorageService fileStorageService;
+    private final BookMapper bookMapper;
 
     public Long save(BookRequest request, Authentication connectedUser){
         User user = ((User) connectedUser.getPrincipal());
-        Book book = toBook(request);
+        Book book = bookMapper.toBook(request);
         book.setOwner(user);
         return bookRepository.save(book).getId();
     }
 
     public BookResponse findById(Long id){
         return bookRepository.findById(id)
-                .map(this::toBookResponse)
+                .map(bookMapper::toBookResponse)
                 .orElseThrow(()->new RuntimeException("Book not exist"));
     }
 
@@ -51,7 +53,7 @@ public class BookService implements IBookService{
         Pageable pageable= PageRequest.of(page, size, Sort.by("creationDate").descending());
         Page<Book> books=bookRepository.findAllDisplayableBooks(pageable, user.getId());
         List<BookResponse> bookResponseList=books.stream()
-                .map(this::toBookResponse)
+                .map(bookMapper::toBookResponse)
                 .toList();
         return new PageResponse<>(
                 bookResponseList,
@@ -69,7 +71,7 @@ public class BookService implements IBookService{
         Pageable pageable= PageRequest.of(page, size, Sort.by("creationDate").descending());
         Page<Book> books=bookRepository.findAll(BookSpecification.withOwnerId(user.getId()), pageable);
         List<BookResponse> bookResponseList=books.stream()
-                .map(this::toBookResponse)
+                .map(bookMapper::toBookResponse)
                 .toList();
         return new PageResponse<>(
                 bookResponseList,
@@ -87,7 +89,7 @@ public class BookService implements IBookService{
         Pageable pageable= PageRequest.of(page, size, Sort.by("creationDate").descending());
         Page<BookTransactionHistory> books=bookTransactionHistoryRepository.findAllBorrowedBooks(pageable, user.getId());
         List<BorrowedBookResponse> response=books.stream()
-                .map(this::toBorrowedBook)
+                .map(bookMapper::toBorrowedBook)
                 .toList();
         return new PageResponse<>(
                 response,
@@ -105,7 +107,7 @@ public class BookService implements IBookService{
         Pageable pageable= PageRequest.of(page, size, Sort.by("creationDate").descending());
         Page<BookTransactionHistory> books=bookTransactionHistoryRepository.findAllReturnedBooks(pageable, user.getId());
         List<BorrowedBookResponse> response=books.stream()
-                .map(this::toBorrowedBook)
+                .map(bookMapper::toBorrowedBook)
                 .toList();
         return new PageResponse<>(
                 response,
@@ -212,44 +214,4 @@ public class BookService implements IBookService{
         bookRepository.save(book);
         return book.getId();
     }
-
-    private BookResponse toBookResponse(Book req){
-        return BookResponse.builder()
-                .id(req.getId())
-                .title(req.getTitle())
-                .owner(req.getOwner().getFullName())
-                .isbn(req.getIsbn())
-                .synopsis(req.getSynopsis())
-                .cover(req.getBookCover().getBytes())
-                .rate(req.getRate())
-                .archived(req.isArchived())
-                .shareable(req.isAvailable())
-                .cover(FileUtils.readFileFromLocation(req.getBookCover()))
-                .build();
-
-    }
-
-    private Book toBook(BookRequest bookRequest){
-        return Book.builder()
-                .id(bookRequest.id())
-                .title(bookRequest.title())
-                .authorName(bookRequest.authorName())
-                .synopsis(bookRequest.synopsis())
-                .archived(false)
-                .available(bookRequest.available())
-                .build();
-    }
-
-    private BorrowedBookResponse toBorrowedBook(BookTransactionHistory book){
-        return BorrowedBookResponse.builder()
-                .id(book.getId())
-                .title(book.getBook().getTitle())
-                .authorName(book.getBook().getAuthorName())
-                .isbn(book.getBook().getIsbn())
-                .rate(book.getBook().getRate())
-                .returned(book.isReturned())
-                .returnApproved(book.isReturnApproved())
-                .build();
-    }
-
 }
