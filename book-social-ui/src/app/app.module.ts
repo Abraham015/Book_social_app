@@ -4,7 +4,9 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import {provideHttpClient} from "@angular/common/http";
+import {HttpClient, provideHttpClient} from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
     declarations: [
@@ -12,7 +14,8 @@ import {provideHttpClient} from "@angular/common/http";
     ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes),
+        HttpClient,
     ],
     providers: [
         provideHttpClient(),

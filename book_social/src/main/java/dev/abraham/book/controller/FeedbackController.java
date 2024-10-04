@@ -3,6 +3,7 @@ package dev.abraham.book.controller;
 import dev.abraham.book.request.feedback.FeedbackRequest;
 import dev.abraham.book.response.APIResponse;
 import dev.abraham.book.response.PageResponse;
+import dev.abraham.book.response.feedback.FeedbackResponse;
 import dev.abraham.book.service.feedback.FeedbackService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
