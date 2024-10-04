@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../sevices/services/authentication.service";
+import {TokenService} from "../../sevices/token/token.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
   authRequest:AuthenticationRequest={email: '', password: ''};
   errorMsg: Array<String> = [];
 
-  constructor(private router: Router, private authService: AuthenticationService) {
+  constructor(private router: Router, private authService: AuthenticationService, private tokenService: TokenService) {
   }
 
   login() {
@@ -28,7 +29,8 @@ export class LoginComponent {
     this.authService.authenticate({
       body: this.authRequest
     }).subscribe({
-      next: ()=>{
+      next: (res)=>{
+        this.tokenService.token=res.data as string;
         this.router.navigate(['books']);
       },
       error: (err)=>{
