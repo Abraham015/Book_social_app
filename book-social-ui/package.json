@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:book-social-ui": "node dist/book-social-ui/server/server.mjs",
-    "api-gen":"ng-openapi-gen --input ./src/openapi/openapi.json --output ./src/app/sevices"
+    "api-gen": "ng-openapi-gen --input ./src/openapi/openapi.json --output ./src/app/sevices"
   },
   "private": true,
   "dependencies": {
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.7",
-    "@angular/cli": "^18.2.7",
+    "@angular/cli": "^16.2.16",
     "@angular/compiler-cli": "^18.2.0",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
