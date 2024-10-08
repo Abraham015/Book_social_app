@@ -14,6 +14,7 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { ApiResponse } from '../models/api-response';
 import { approveReturnBook } from '../fn/book/approve-return-book';
 import { ApproveReturnBook$Params } from '../fn/book/approve-return-book';
+import { BookResponse } from '../models/book-response';
 import { borrowBook } from '../fn/book/borrow-book';
 import { BorrowBook$Params } from '../fn/book/borrow-book';
 import { getAllBooks } from '../fn/book/get-all-books';
@@ -229,7 +230,7 @@ export class BookService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getBookById$Response(params: GetBookById$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponse>> {
+  getBookById$Response(params: GetBookById$Params, context?: HttpContext): Observable<StrictHttpResponse<BookResponse>> {
     return getBookById(this.http, this.rootUrl, params, context);
   }
 
@@ -239,9 +240,9 @@ export class BookService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getBookById(params: GetBookById$Params, context?: HttpContext): Observable<ApiResponse> {
+  getBookById(params: GetBookById$Params, context?: HttpContext): Observable<BookResponse> {
     return this.getBookById$Response(params, context).pipe(
-      map((r: StrictHttpResponse<ApiResponse>): ApiResponse => r.body)
+      map((r: StrictHttpResponse<BookResponse>): BookResponse => r.body)
     );
   }
 

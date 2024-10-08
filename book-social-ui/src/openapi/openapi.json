@@ -1,33 +1,13 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenApi specification",
-    "description": "OpenApi documentation for Spring security",
-    "termsOfService": "Terms of Service",
-    "contact": {
-      "name": "Abraham",
-      "url": "https://aliboucoding.com/courses",
-      "email": "abraham@mail.com"
-    },
-    "license": {
-      "name": "Licence name",
-      "url": "https://some-url.com"
-    },
-    "version": "1.0"
+    "title": "OpenAPI definition",
+    "version": "v0"
   },
   "servers": [
     {
       "url": "http://localhost:8080/api/v1",
-      "description": "Local ENV"
-    },
-    {
-      "url": "https//some-url.com",
-      "description": "Prod ENV"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
+      "description": "Generated server url"
     }
   ],
   "paths": {
@@ -419,7 +399,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/APIResponse"
+                  "$ref": "#/components/schemas/BookResponse"
                 }
               }
             }
@@ -781,6 +761,47 @@
           }
         }
       },
+      "BookResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "authorName": {
+            "type": "string"
+          },
+          "isbn": {
+            "type": "string"
+          },
+          "synopsis": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "cover": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          },
+          "rate": {
+            "type": "number",
+            "format": "double"
+          },
+          "archived": {
+            "type": "boolean"
+          },
+          "shareable": {
+            "type": "boolean"
+          }
+        }
+      },
       "BorrowedBookResponse": {
         "type": "object",
         "properties": {
@@ -842,47 +863,6 @@
           }
         }
       },
-      "BookResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "title": {
-            "type": "string"
-          },
-          "authorName": {
-            "type": "string"
-          },
-          "isbn": {
-            "type": "string"
-          },
-          "synopsis": {
-            "type": "string"
-          },
-          "owner": {
-            "type": "string"
-          },
-          "cover": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "byte"
-            }
-          },
-          "rate": {
-            "type": "number",
-            "format": "double"
-          },
-          "archived": {
-            "type": "boolean"
-          },
-          "shareable": {
-            "type": "boolean"
-          }
-        }
-      },
       "PageResponseBookResponse": {
         "type": "object",
         "properties": {
@@ -915,15 +895,6 @@
             "type": "boolean"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "description": "JWT auth description",
-        "in": "header",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
       }
     }
   }
