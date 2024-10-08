@@ -43,7 +43,6 @@ public class AuthenticationService implements IAuthenticationService {
 
     //@Transactional
     public void activateAccount(String token) throws MessagingException {
-        System.out.println("El token es "+token );
         Token savedToken=tokenRepository
                 .findByToken(token)
                 .orElseThrow(()->new RuntimeException("Token not valid"));

@@ -1,55 +1,61 @@
 {
-  "hash": "efc62c50",
-  "configHash": "8afb0805",
-  "lockfileHash": "45954c27",
-  "browserHash": "4a4f360a",
+  "hash": "2882e58f",
+  "configHash": "d5ac0f0a",
+  "lockfileHash": "297becdc",
+  "browserHash": "dc0db9ed",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "e729b53f",
+      "fileHash": "451df978",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "afa8bca9",
+      "fileHash": "9bd125d2",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "b94b932c",
+      "fileHash": "cdb0fa11",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "968e972d",
+      "fileHash": "ba91aa4d",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "a0c588c3",
+      "fileHash": "34db1730",
       "needsInterop": false
     },
     "@angular/platform-server": {
       "src": "../../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
       "file": "@angular_platform-server.js",
-      "fileHash": "b0da3e12",
+      "fileHash": "fc40d39e",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "6cf72726",
+      "fileHash": "6bcf8196",
+      "needsInterop": false
+    },
+    "angular-code-input": {
+      "src": "../../../../../../node_modules/angular-code-input/fesm2022/angular-code-input.mjs",
+      "file": "angular-code-input.js",
+      "fileHash": "16341f49",
       "needsInterop": false
     },
     "rxjs/operators": {
       "src": "../../../../../../node_modules/rxjs/dist/cjs/operators/index.js",
       "file": "rxjs_operators.js",
-      "fileHash": "b5c5f99b",
+      "fileHash": "3edf4eef",
       "needsInterop": true
     }
   },

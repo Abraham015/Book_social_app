@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import {HttpClient, provideHttpClient} from "@angular/common/http";
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/http";
+import {httpTokenInterceptor} from "./sevices/interceptor/http-token.interceptor";
 
 
 @NgModule({
@@ -14,8 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
     ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routes),
-        HttpClient,
+        RouterModule.forRoot(routes)
     ],
     providers: [
         provideHttpClient(),
