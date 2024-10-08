@@ -35,12 +35,12 @@ public class BookController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<APIResponse> getBookById(@PathVariable Long id){
+    public ResponseEntity<BookResponse> getBookById(@PathVariable Long id){
         try{
             BookResponse response=bookService.findById(id);
-            return ResponseEntity.ok(new APIResponse("Book found",response));
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new APIResponse("Book does not exist", null));
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(null);
         }
     }
 

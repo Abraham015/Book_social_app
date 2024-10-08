@@ -15,6 +15,7 @@ public class BookMapper {
                 .id(req.getId())
                 .title(req.getTitle())
                 .owner(req.getOwner().getFullName())
+                .authorName(req.getAuthorName())
                 .isbn(req.getIsbn())
                 .synopsis(req.getSynopsis())
                 .cover(req.getBookCover().getBytes())
@@ -23,7 +24,6 @@ public class BookMapper {
                 .shareable(req.isAvailable())
                 .cover(FileUtils.readFileFromLocation(req.getBookCover()))
                 .build();
-
     }
 
     public Book toBook(BookRequest bookRequest){
@@ -34,6 +34,7 @@ public class BookMapper {
                 .synopsis(bookRequest.synopsis())
                 .archived(false)
                 .available(bookRequest.available())
+                .isbn(bookRequest.isbn())
                 .build();
     }
 
