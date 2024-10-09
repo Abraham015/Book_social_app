@@ -24,6 +24,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<APIResponse> register(@RequestBody @Valid RegistrationRequest request){
         try {
+            System.out.println(request);
             authenticationService.register(request);
             return ResponseEntity.ok(new APIResponse( "User registered successfully", null));
         } catch (Exception e) {

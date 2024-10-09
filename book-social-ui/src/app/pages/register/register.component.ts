@@ -30,6 +30,7 @@ export class RegisterComponent {
 
   register(){
     this.errorMsg=[];
+    console.log(this.registerRequest);
     this.authService.register({
       body: this.registerRequest
     }).subscribe({

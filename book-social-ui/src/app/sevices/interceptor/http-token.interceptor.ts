@@ -3,6 +3,10 @@ import {inject} from "@angular/core";
 import {TokenService} from "../token/token.service";
 
 export const httpTokenInterceptor: HttpInterceptorFn = (req, next) => {
+  if (req.url.includes('/auth/register')) {
+    return next(req); // No agregar el token para esta ruta
+  }
+
   const tokenService=inject(TokenService);
   const token=tokenService.token;
   if(token){
