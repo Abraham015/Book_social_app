@@ -50,6 +50,7 @@ public class BookController {
                                                  @RequestParam(name = "size", defaultValue = "10", required = false) int size,
                                                  Authentication connectedUser){
         try{
+            System.out.println(bookService.findAllBooks(page, size, connectedUser));
             return ResponseEntity.ok(bookService.findAllBooks(page, size, connectedUser));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(null);

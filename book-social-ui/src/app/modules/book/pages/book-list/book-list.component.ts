@@ -35,7 +35,11 @@ export class BookListComponent implements OnInit{
         {page: this.page, size: this.size}
     ).subscribe({
       next: (books)=>{
+        console.log(books);
         this.bookResponse = books;
+      },
+      error: (err) => {
+        this.message = err.message;
       }
     });
   }
