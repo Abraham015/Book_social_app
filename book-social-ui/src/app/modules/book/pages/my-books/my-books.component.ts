@@ -77,7 +77,7 @@ export class MyBooksComponent implements OnInit{
       'bookId': book.id as number,
     }).subscribe({
       next: ()=>{
-        book.shareable =!book.shareable
+        book.archived =!book.archived
       }
     })
   }

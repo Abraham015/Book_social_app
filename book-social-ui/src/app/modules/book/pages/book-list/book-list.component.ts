@@ -5,6 +5,7 @@ import {PageResponseBookResponse} from "../../../../sevices/models/page-response
 import {NgForOf, NgIf} from "@angular/common";
 import {BookCardComponent} from "../../components/book-card/book-card.component";
 import {BookResponse} from "../../../../sevices/models/book-response";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-book-list',
@@ -35,7 +36,6 @@ export class BookListComponent implements OnInit{
         {page: this.page, size: this.size}
     ).subscribe({
       next: (books)=>{
-        console.log(books);
         this.bookResponse = books;
       },
       error: (err) => {
@@ -82,12 +82,21 @@ export class BookListComponent implements OnInit{
       'bookId': book.id as number
     }).subscribe({
       next: ()=>{
-        this.level='success';
-        this.message='Book successfully added to your list';
+        Swal.fire({
+          icon: "success",
+          title: "Book successfully added to your list",
+          confirmButtonText: 'Ok'
+        }).then(()=>{
+          book.shareable=false;
+        });
       },
-      error:(err)=>{
-        this.level='error';
-        this.message=err.error.error;
+      error:()=>{
+        Swal.fire({
+          title: 'Error!',
+          text: 'Book already borrowed',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
       }
     })
   }

@@ -18,7 +18,6 @@ export class BookCardComponent {
   private _book: BookResponse={};
 
   get book(): BookResponse {
-    console.log(this._book.authorName);
     return this._book;
   }
 

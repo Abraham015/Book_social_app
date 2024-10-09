@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {BookRequest} from "../../../../sevices/models/book-request";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {BookService} from "../../../../sevices/services/book.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-manage-book',
@@ -50,12 +51,21 @@ export class ManageBookComponent implements OnInit{
           }
         }).subscribe({
           next:()=>{
-            this.router.navigate(['books/my-books']);
+            Swal.fire({
+              icon: "success",
+              title: "Book created successfully",
+              confirmButtonText: 'Ok'
+            }).then(()=>this.router.navigate(['books/my-books']));
           }
         })
       },
       error:(err)=>{
-        this.errorMsg=err.error.validationErrors;
+        Swal.fire({
+          title: 'Error!',
+          text: err.error.validationError,
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
       }
     })
   }
@@ -80,7 +90,12 @@ export class ManageBookComponent implements OnInit{
           }
         },
         error: (err)=>{
-          this.errorMsg=err.error.validationError;
+          Swal.fire({
+            title: 'Error!',
+            text: err.error.validationError,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
         }
       })
     }
