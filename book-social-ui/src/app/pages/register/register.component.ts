@@ -4,6 +4,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../sevices/services/authentication.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-register',
@@ -30,16 +31,26 @@ export class RegisterComponent {
 
   register(){
     this.errorMsg=[];
-    console.log(this.registerRequest);
     this.authService.register({
       body: this.registerRequest
     }).subscribe({
       next: ()=>{
-        this.router.navigate(['activate-account']);
+        Swal.fire({
+          icon: "success",
+          title: "User created successfully",
+          confirmButtonText: 'Ok'
+        }).then(()=>this.router.navigate(['activate-account']));
       },
-      error: (err)=>{
-        this.errorMsg=err.error.validationErrors;
-      }
-    });
+      error: (err) => {
+        Swal.fire({
+          title: 'Error!',
+          html: `
+              ${err.error.validationErrors.join('<br>')}
+            `,
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            })
+          }
+        });
   }
 }

@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {AuthenticationService} from "../../sevices/services/authentication.service";
 import {NgIf} from "@angular/common";
 import {CodeInputModule} from "angular-code-input";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-activate-account',
@@ -34,14 +35,25 @@ export class ActivateAccountComponent {
       token: token
     }).subscribe({
       next: ()=>{
-        this.message="Your account has been successfully activated";
-        this.submitted=true;
-        this.isOkay=true;
+        Swal.fire({
+          icon: "success",
+          title: "Your account has been successfully activated",
+          confirmButtonText: 'Ok'
+        }).then(()=>{
+          this.submitted=true;
+          this.isOkay=true;
+        });
       },
-      error: (err) => {
-        this.message="Token has been expired or invalid!";
-        this.submitted=true;
-        this.isOkay=false;
+      error: () => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Token has been expired or invalid!',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        }).then(()=>{
+          this.submitted=true;
+          this.isOkay=false;
+        });
       }
     })
   }

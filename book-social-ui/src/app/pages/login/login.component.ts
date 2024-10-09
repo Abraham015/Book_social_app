@@ -5,6 +5,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../sevices/services/authentication.service";
 import {TokenService} from "../../sevices/token/token.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-login',
@@ -34,11 +35,21 @@ export class LoginComponent {
         this.router.navigate(['books']);
       },
       error: (err)=>{
-        console.log(err);
+        console.log(err.error.validationErrors);
         if(err.error.validationErrors){
-          this.errorMsg=err.error.validationErrors;
+          Swal.fire({
+            title: 'Error!',
+            text: err.error.validationErrors,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
         }else{
-          this.errorMsg.push(err.error.message);
+          Swal.fire({
+            title: 'Error!',
+            text: 'Email and / or Password is incorrect',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
         }
       }
     })
