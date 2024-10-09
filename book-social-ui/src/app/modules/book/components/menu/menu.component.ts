@@ -13,7 +13,8 @@ import {RouterLink} from "@angular/router";
 export class MenuComponent implements OnInit{
 
   logOut() {
-
+    localStorage.removeItem('token');
+    window.location.reload();
   }
 
   ngOnInit(): void {
