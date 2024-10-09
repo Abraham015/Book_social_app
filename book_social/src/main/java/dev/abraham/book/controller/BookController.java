@@ -50,7 +50,6 @@ public class BookController {
                                                  @RequestParam(name = "size", defaultValue = "10", required = false) int size,
                                                  Authentication connectedUser){
         try{
-            System.out.println(bookService.findAllBooks(page, size, connectedUser));
             return ResponseEntity.ok(bookService.findAllBooks(page, size, connectedUser));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(null);
@@ -131,6 +130,7 @@ public class BookController {
         try{
             return ResponseEntity.ok(new APIResponse("Return approved", bookService.approveReturnBook(bookId, connectedUser)));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new APIResponse(e.getMessage(), null));
         }
     }

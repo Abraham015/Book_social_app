@@ -171,6 +171,8 @@ public class BookService implements IBookService{
                 .returned(false)
                 .returnApproved(false)
                 .build();
+        bookTransactionHistory.setCreatedBy(user.getId());
+        bookTransactionHistory.setCreationDate(LocalDateTime.now());
         bookTransactionHistoryRepository.save(bookTransactionHistory);
         return bookTransactionHistory.getId();
     }
@@ -188,6 +190,8 @@ public class BookService implements IBookService{
         BookTransactionHistory history=bookTransactionHistoryRepository.findByBookIdAndUserId(bookId, user.getId())
                 .orElseThrow(()->new OperationNotValidException("You did not borrow this book"));
         history.setReturned(true);
+        history.setCreatedBy(user.getId());
+        history.setCreationDate(LocalDateTime.now());
         bookTransactionHistoryRepository.save(history);
         return history.getId();
     }
@@ -199,7 +203,7 @@ public class BookService implements IBookService{
             throw new OperationNotValidException("You can not borrow book");
         }
         User user=(User)connectedUser.getPrincipal();
-        if(Objects.equals(book.getOwner().getId(),user.getId())){
+        if(!Objects.equals(book.getOwner().getId(),user.getId())){
             throw new OperationNotValidException("You can not return your own book");
         }
         BookTransactionHistory history=bookTransactionHistoryRepository.findByBookIdAndOwnerId(bookId, user.getId())

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,8 @@ public class FeedbackService implements IFeedbackService {
             throw new OperationNotValidException("You can not give a feedback to your own book");
         }
         Feedback feedback=feedbackMapper.toFeedback(feedbackRequest);
+        feedback.setCreatedBy(user.getId());
+        feedback.setCreationDate(LocalDateTime.now());
         return feedbackRepository.save(feedback).getId();
     }
 
