@@ -7,3 +7,4 @@
 /book-social-ui/node_modules
 /book_social/target
 /book-social-ui/.angular
+/uploads/**
