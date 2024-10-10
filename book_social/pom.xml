@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.abraham</groupId>
 	<artifactId>book_social</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>book_social_api</name>
 	<description>Backend project for book_social</description>
 	<url/>
