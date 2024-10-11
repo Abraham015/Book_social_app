@@ -8,7 +8,7 @@ RUN npm install --force
 
 COPY . .
 
-RUN npm run build -- --configuration production
+RUN npm ci && npm run build -- --configuration production
 
 FROM nginx
 
