@@ -15,7 +15,7 @@ import {ApiModule} from "./sevices/api.module";
     imports: [
         BrowserModule,
         AppRoutingModule,
-        ApiModule.forRoot({rootUrl:'http://18.170.213.218:8088/api/v1'})
+        //ApiModule.forRoot({rootUrl:'http://18.170.213.218:8088/api/v1'})
     ],
     providers: [
         provideHttpClient(),
