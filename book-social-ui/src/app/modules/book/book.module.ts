@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {bookRoutes, BookRoutingModule} from './book-routing.module';
-import {RouterModule} from "@angular/router";
-
+import { BookRoutingModule } from './book-routing.module';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    [RouterModule.forChild(bookRoutes)],
+    BookRoutingModule // Importa el BookRoutingModule directamente
   ],
-  exports: [RouterModule]
+  exports: [BookRoutingModule] // Exporta el BookRoutingModule
 })
 export class BookModule { }

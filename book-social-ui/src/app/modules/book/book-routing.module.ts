@@ -6,7 +6,6 @@ import {MyBooksComponent} from "./pages/my-books/my-books.component";
 import {ManageBookComponent} from "./pages/manage-book/manage-book.component";
 import {BorrowedBookListComponent} from "./pages/borrowed-book-list/borrowed-book-list.component";
 import {ReturnBooksComponent} from "./pages/return-books/return-books.component";
-import {AuthGuard} from "../../sevices/guard/auth.guard";
 
 const routes: Routes = [
   {
@@ -15,39 +14,32 @@ const routes: Routes = [
     children:[
       {
         path: '',
-        component: BookListComponent,
-        canActivate: [AuthGuard]
+        component: BookListComponent
       },
       {
         path: 'my-books',
-        component: MyBooksComponent,
-        canActivate: [AuthGuard]
+        component: MyBooksComponent
       },
       {
         path: 'manage',
-        component: ManageBookComponent,
-        canActivate: [AuthGuard]
+        component: ManageBookComponent
       },
       {
         path: 'manage/:bookId',
-        component: ManageBookComponent,
-        canActivate: [AuthGuard]
+        component: ManageBookComponent
       },
       {
         path: 'my_borrow_books',
-        component: BorrowedBookListComponent,
-        canActivate: [AuthGuard]
+        component: BorrowedBookListComponent
       },
       {
         path: 'my_return_books',
-        component: ReturnBooksComponent,
-        canActivate: [AuthGuard]
+        component: ReturnBooksComponent
       }
     ]
   }
 ];
 
-export const bookRoutes: Routes = routes;
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

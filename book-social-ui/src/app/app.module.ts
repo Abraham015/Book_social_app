@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/http";
-import {httpTokenInterceptor} from "./sevices/interceptor/http-token.interceptor";
 
 
 @NgModule({
