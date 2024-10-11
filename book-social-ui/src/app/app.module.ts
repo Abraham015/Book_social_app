@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/http";
-import {httpTokenInterceptor} from "./sevices/interceptor/http-token.interceptor";
+import {provideHttpClient} from "@angular/common/http";
+import {ApiModule} from "./sevices/api.module";
 
 
 @NgModule({
@@ -14,7 +14,8 @@ import {httpTokenInterceptor} from "./sevices/interceptor/http-token.interceptor
     ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes),
+        ApiModule.forRoot({rootUrl:'http://http://18.170.213.218:8088/api/v1'})
     ],
     providers: [
         provideHttpClient(),
