@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { BookRoutingModule } from './book-routing.module';
 
@@ -7,8 +8,9 @@ import { BookRoutingModule } from './book-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    BookRoutingModule // Importa el BookRoutingModule directamente
+    RouterModule, // Import RouterModule directly
+    BookRoutingModule
   ],
-  exports: [BookRoutingModule] // Exporta el BookRoutingModule
+  exports: [RouterModule]
 })
 export class BookModule { }
