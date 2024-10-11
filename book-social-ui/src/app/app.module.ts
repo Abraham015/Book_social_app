@@ -1,11 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/http";
-
+import { BookModule } from './book/book.module';
+import {provideHttpClient} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -13,7 +13,8 @@ import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/h
     ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes),
+        BookModule // Import BookModule
     ],
     providers: [
         provideHttpClient(),
