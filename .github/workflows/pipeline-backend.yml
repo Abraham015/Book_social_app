@@ -28,7 +28,6 @@ jobs:
           cd book_social
           ./mvnw clean compile
 
-
   unit-tests:
     runs-on: ubuntu-latest
     name: Unit tests
