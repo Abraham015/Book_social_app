@@ -100,7 +100,7 @@ jobs:
           context: book_social
           file: docker/backend/Dockerfile
           push: true
-          platforms: 'x86|x64'
+          platforms: linux/amd64
           tags: ${{secrets.DOCKER_USERNAME}}/bsn-api:${{steps.extract_version.outputs.VERSION}}, ${{secrets.DOCKER_USERNAME}}/bsn-api:latest
           build-args: |
             PROFILE=dev

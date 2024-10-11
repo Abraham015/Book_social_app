@@ -34,7 +34,7 @@ jobs:
           context: book-social-ui
           file: docker/frontend/Dockerfile
           push: true
-          platforms: 'x86|x64'
+          platforms: linux/amd64
           tags: ${{secrets.DOCKER_USERNAME}}/bsn-ui:${{steps.extract_version.outputs.VERSION}}, ${{secrets.DOCKER_USERNAME}}/bsn-ui:latest
 
   deploy:
