@@ -24,9 +24,7 @@ jobs:
           java-version: 17
           distribution: 'corretto'
       - name: Compile project
-        run: |
-          cd book_social
-          ./mvnw clean compile
+        run: mvn --batch-mode --update-snapshots verify
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -42,10 +40,7 @@ jobs:
           java-version: 17
           distribution: 'corretto'
       - name: Running unit tests
-        run: |
-          cd book_social
-          ./mvnw clean test
-
+        run: mvn --batch-mode --update-snapshots verify
 
   build:
     runs-on: ubuntu-latest
