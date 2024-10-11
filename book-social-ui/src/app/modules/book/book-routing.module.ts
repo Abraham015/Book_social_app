@@ -47,6 +47,7 @@ const routes: Routes = [
   }
 ];
 
+export const bookRoutes: Routes = routes;
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
