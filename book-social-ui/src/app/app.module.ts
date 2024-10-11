@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app.routes';
-import { ApiModule } from "./sevices/api.module";
+import { routes } from './app.routes';
+import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/http";
+import {httpTokenInterceptor} from "./sevices/interceptor/http-token.interceptor";
+
 
 @NgModule({
     declarations: [
@@ -12,11 +14,11 @@ import { ApiModule } from "./sevices/api.module";
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule,
-        RouterModule,
-        ApiModule.forRoot({rootUrl:'http://18.170.213.218:8088/api/v1'})
+        RouterModule.forRoot(routes)
     ],
-    providers: [],
+    providers: [
+        provideHttpClient(),
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
