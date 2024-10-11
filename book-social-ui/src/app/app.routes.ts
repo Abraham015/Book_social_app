@@ -1,10 +1,11 @@
-import { Routes } from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from "./pages/login/login.component";
 import {RegisterComponent} from "./pages/register/register.component";
 import {ActivateAccountComponent} from "./pages/activate-account/activate-account.component";
-import {AuthGuard} from "./sevices/guard/auth.guard";
+import {authGuard} from "./sevices/guard/auth.guard";
+import {NgModule} from "@angular/core";
 
-export const routes: Routes = [
+const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
@@ -20,6 +21,13 @@ export const routes: Routes = [
     {
         path: 'books',
         loadChildren: ()=>import('./modules/book/book.module').then(m=>m.BookModule),
-        canActivate: [AuthGuard]
+        canActivate: [authGuard]
     }
 ];
+
+@NgModule({
+    imports: [RouterModule.forRoot(routes || [])],
+    exports: [RouterModule]
+})
+
+export class AppRoutingModule { }
