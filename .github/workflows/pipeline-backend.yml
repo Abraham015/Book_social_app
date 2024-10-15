@@ -141,6 +141,5 @@ jobs:
           username: ${{ secrets.AMAZON_USERNAME }}
           key: ${{ secrets.AMAZON_KEY }}
           script: |
-              cd ci-cd
               sudo docker-compose -f ci-cd/docker-compose.yml pull
               sudo docker-compose -f ci-cd/docker-compose.yml up -d
