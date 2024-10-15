@@ -136,15 +136,15 @@ jobs:
             sudo chmod +x /usr/local/bin/docker-compose
       - name: Build and Push Docker images
         run: |
-            docker-compose -f ci-cd/docker-compose.yml build
-            docker-compose -f ci-cd/docker-compose.yml push
+            sudo docker-compose -f ../../../../ec2-user/ci-cd/docker-compose.yml build
+            sudo docker-compose -f ../../../../ec2-user/ci-cd/docker-compose.yml push
       - name: Copy Docker Compose file to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.AMAZON_IP }}
           username: ${{ secrets.AMAZON_USERNAME }}
           key: ${{ secrets.AMAZON_KEY }}
-          source: "ci-cd/docker-compose.yml"
+          source: "../../../../ec2-user/ci-cd/docker-compose.yml"
           target: "/ci-cd"
       - name: Deploy on server
         uses: appleboy/ssh-action@master
