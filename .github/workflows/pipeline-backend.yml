@@ -125,3 +125,10 @@ jobs:
           host: ${{ secrets.AMAZON_IP }}
           username: ${{ secrets.AMAZON_USERNAME }}
           script: mkdir -p ci-cd
+      - name: Docker compose file
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.AMAZON_KEY }}
+          host: ${{ secrets.AMAZON_IP }}
+          username: ${{ secrets.AMAZON_USERNAME }}
+          script: scp docker-compose.yml ${{secrets.AMAZON_USERNAME}}@${{secrets.AMAZON_IP}}:ci-cd/docker-compose.yml
