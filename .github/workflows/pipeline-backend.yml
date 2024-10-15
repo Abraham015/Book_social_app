@@ -119,12 +119,12 @@ jobs:
     needs: build-image
     steps:
       - name: Create deployment folder
-        run: ssh ${{secrets.VPS_USERNAME}}@${{secrets.VPS_IP}} "mkdir -p ci-cd"
+        run: ssh -i ${{secrets.AMAZON_KEY}} ${{secrets.AMAZON_USERNAME}}@${{secrets.AMAZON_IP}} "mkdir -p ci-cd"
       - name: Docker compose file
-        run: scp docker-compose.yml ${{secrets.VPS_USERNAME}}@${{secrets.VPS_IP}}:ci-cd/docker-compose.yml
+        run: scp docker-compose.yml ${{secrets.AMAZON_USERNAME}}@${{secrets.AMAZON_IP}}:ci-cd/docker-compose.yml
       - name: Set ENV variables
         run: |
-          ssh ${{secrets.VPS_USERNAME}}@${{secrets.VPS_IP}}<<EOF
+          ssh -i ${{secrets.AMAZON_KEY}} ${{secrets.AMAZON_USERNAME}}@${{secrets.AMAZON_IP}}<<EOF
           export EMAIL_HOSTNAME=${{secrets.EMAIL_HOSTNAME}}
           export EMAIL_USER_NAME=${{secrets.EMAIL_USERNAME}}
           export EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}}
