@@ -125,4 +125,3 @@ jobs:
           host: ${{ secrets.AMAZON_IP }}
           username: ${{ secrets.AMAZON_USERNAME }}
         run: "mkdir -p ci-cd"
-      
